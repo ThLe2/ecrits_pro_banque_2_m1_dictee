@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dictée — Dictée n° 2 — Une carte volée</title>
+<style>
+
+:root{--prune:#8C1E70;--prune-fonce:#5E1349;--prune-clair:#F4E6EE;--accent:#C77BAA;
+ --vert:#283C28;--gris:#3C3C3C;--gris-moyen:#8A7A85;--filet:#E8DCE5;--creme:#FAF6F8;
+ --ok:#2F7A4F;--ko:#B23B3B;--amb:#B5852A;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--creme);color:var(--gris);
+ font-family:"Nunito","Segoe UI",Helvetica,Arial,sans-serif;font-size:16px;line-height:1.62}
+.wrap{max-width:900px;margin:0 auto;padding:0 18px 60px}
+header.bandeau{background:var(--prune-fonce);color:#fff;padding:18px 0;border-bottom:4px solid var(--accent)}
+header.bandeau .wrap{padding-bottom:0}
+.chapitre{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#EAD3E3}
+.chapitre span{color:var(--accent);margin:0 6px}
+h1{font-family:Georgia,"Times New Roman",serif;font-size:27px;line-height:1.25;margin:8px 0 4px;color:#fff}
+.sous{color:#EAD3E3;font-size:14.5px;margin:0}
+h2{font-family:Georgia,"Times New Roman",serif;font-size:20px;color:var(--prune-fonce);
+ margin:34px 0 0;padding-bottom:8px;border-bottom:2px solid var(--filet)}
+h2 .num{color:var(--accent);margin-right:8px}
+h3{font-size:15px;color:var(--vert);margin:20px 0 8px;letter-spacing:.02em}
+.carte{background:#fff;border:1px solid var(--filet);border-radius:10px;padding:20px 22px;margin:18px 0;
+ box-shadow:0 1px 2px rgba(94,19,73,.05)}
+.enc{background:var(--prune-clair);border-left:5px solid var(--prune);padding:14px 18px;
+ border-radius:0 8px 8px 0;margin:18px 0;font-size:15.2px}
+.enc .t{display:block;font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;
+ font-weight:800;color:var(--prune-fonce);margin-bottom:6px}
+.enc.al{background:#FBF4F4;border-left-color:var(--ko)}.enc.al .t{color:var(--ko)}
+.enc.ci{background:#FCF8F0;border-left-color:var(--amb)}.enc.ci .t{color:#8A6418}
+.situ{background:#FCF9FB;border:1px dashed var(--filet);border-radius:8px;padding:16px 18px;margin:16px 0;font-size:15.2px}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+.duo>div{background:#fff;border:1px solid var(--filet);border-radius:9px;padding:15px 17px;font-size:14.8px}
+.duo .h{font-weight:800;color:var(--prune-fonce);margin-bottom:7px;font-size:14.5px}
+.tri{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.tri>div{background:#fff;border:1px solid var(--filet);border-radius:9px;padding:14px 15px;font-size:14.3px}
+.quad{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
+.quad>div{background:#fff;border:1px solid var(--filet);border-radius:9px;padding:12px 13px;font-size:13.6px}
+.quad .h{font-weight:800;color:var(--prune-fonce);margin-bottom:6px;font-size:13px;
+ text-transform:uppercase;letter-spacing:.04em}
+.tri .h{font-weight:800;color:var(--prune-fonce);margin-bottom:6px;font-size:13.5px;
+ text-transform:uppercase;letter-spacing:.05em}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.8px;background:#fff}
+th,td{border:1px solid var(--filet);padding:9px 12px;text-align:left}
+thead th{background:var(--prune-clair);color:var(--prune-fonce);font-size:13.5px}
+tbody th{font-weight:600;color:var(--gris)}
+td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.tot td,tr.tot th{background:#FBF3F8;font-weight:800;color:var(--prune-fonce)}
+.dl{display:inline-flex;align-items:center;gap:9px;background:var(--prune);color:#fff;text-decoration:none;
+ padding:11px 20px;border-radius:8px;font-weight:700;font-size:15px;margin:20px 0 4px}
+.dl:hover{background:var(--prune-fonce)}
+ol.q{padding-left:0;list-style:none;counter-reset:q}
+ol.q>li{margin:16px 0;padding-left:38px;position:relative}
+ol.q>li::before{counter-increment:q;content:counter(q);position:absolute;left:0;top:1px;
+ width:26px;height:26px;border-radius:50%;background:var(--prune-clair);color:var(--prune-fonce);
+ font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center}
+b,strong{color:var(--vert)}
+footer{text-align:center;font-size:12.5px;color:var(--gris-moyen);padding:26px 18px 12px;
+ border-top:1px solid var(--filet);margin-top:44px}
+@media(max-width:860px){.quad{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.duo,.tri,.quad{grid-template-columns:1fr}h1{font-size:22px}}
+@media print{body{background:#fff}.dl{display:none}header.bandeau{background:#5E1349 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+
+
+.champ{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:11px 0;
+ padding:11px 13px;background:#FCF9FB;border:1px solid var(--filet);border-radius:9px}
+.champ .lb{flex:1 1 340px;font-size:15px}
+.champ .pts{font-size:12px;color:var(--gris-moyen);white-space:nowrap}
+input.num,select.ch{font-family:inherit;font-size:15px;padding:9px 12px;border:1.5px solid var(--filet);
+ border-radius:8px;background:#fff;color:var(--gris);min-width:210px}
+input.num{min-width:150px;text-align:right;font-variant-numeric:tabular-nums}
+input.num:focus,select.ch:focus{outline:none;border-color:var(--prune)}
+input.num:disabled,select.ch:disabled{background:#F1EBEF;color:var(--gris-moyen);cursor:not-allowed}
+.champ.just{border-color:#BFE0CC;background:#F3FAF5}
+.champ.faux{border-color:#EFC9C9;background:#FDF5F5}
+.verdict{font-weight:800;font-size:13px;white-space:nowrap}
+.verdict.ok{color:var(--ok)}.verdict.ko{color:var(--ko)}
+.btn{display:inline-flex;align-items:center;gap:9px;background:var(--prune);color:#fff;border:0;
+ padding:12px 22px;border-radius:8px;font-family:inherit;font-weight:800;font-size:15px;cursor:pointer}
+.btn:hover{background:var(--prune-fonce)}
+.btn:disabled{background:#C9B7C3;cursor:not-allowed}
+.btn.sec{background:#fff;color:var(--prune-fonce);border:1.5px solid var(--filet)}
+.btn.sec:hover{background:var(--prune-clair)}
+.barre{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:16px}
+.fige{display:inline-block;font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;font-weight:800;
+ color:var(--prune-fonce);background:var(--prune-clair);padding:6px 11px;border-radius:20px}
+.corr{display:none;margin-top:16px}.corr.on{display:block}
+.score{display:flex;flex-wrap:wrap;gap:18px;align-items:baseline;
+ background:var(--prune-fonce);color:#fff;border-radius:10px;padding:18px 22px;margin:18px 0}
+.score .gros{font-family:Georgia,serif;font-size:32px;font-weight:700;color:#fff}
+.score .lib{font-size:14px;color:#EAD3E3}
+.opt{display:block;background:#fff;border:1.5px solid var(--filet);border-radius:9px;
+ padding:11px 14px;margin:8px 0;font-size:15px;cursor:pointer}
+.opt:hover{border-color:var(--accent)}
+.opt input{margin-right:10px}
+.opt.sel{border-color:var(--prune);background:var(--prune-clair)}
+.opt.bonne{border-color:var(--ok);background:#F3FAF5}
+.opt.mauvaise{border-color:var(--ko);background:#FDF5F5}
+.opt.verrou{cursor:not-allowed}
+.qbloc{background:#fff;border:1px solid var(--filet);border-radius:10px;padding:18px 20px;margin:16px 0}
+.qnum{font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;font-weight:800;color:var(--accent)}
+.qth{display:inline-block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:800;
+ color:var(--prune-fonce);background:var(--prune-clair);padding:4px 9px;border-radius:20px;margin-left:8px}
+.qen{font-size:16.5px;font-weight:700;color:var(--vert);margin:8px 0 4px}
+.multi{font-size:12.5px;color:var(--gris-moyen);font-style:italic;margin-bottom:6px}
+.prog{height:8px;background:var(--filet);border-radius:20px;overflow:hidden;margin:14px 0 4px}
+.prog i{display:block;height:100%;background:var(--prune);width:0;transition:width .25s}
+.sticky{position:sticky;bottom:0;background:var(--creme);padding:12px 0;border-top:1px solid var(--filet)}
+@media print{.btn,.sticky{display:none}}
+
+
+.phrase{flex:1 1 360px;font-size:15.5px}
+.phrase .trou{display:inline-block;min-width:70px;border-bottom:2px dotted var(--accent);text-align:center;color:var(--accent);font-weight:800}
+select.ch{min-width:170px}
+
+textarea.redac{width:100%;font-family:inherit;font-size:15.5px;line-height:1.7;padding:12px 14px;border:1.5px solid var(--filet);border-radius:9px;background:#fff;color:var(--gris);resize:vertical}
+textarea.redac:focus{outline:none;border-color:var(--prune)}
+textarea.redac:disabled{background:#F1EBEF;color:var(--gris-moyen)}
+audio{width:100%;margin:10px 0}
+.diff{background:#fff;border:1px solid var(--filet);border-radius:9px;padding:14px 16px;font-size:15.5px;line-height:1.9}
+.diff .ko{background:#FDECEC;border-bottom:2px solid var(--ko);border-radius:3px;padding:0 2px}
+.diff .ko small{color:var(--ok);font-weight:800;margin-left:3px}
+.diff .manque{color:var(--ko);font-weight:800}
+.audio-ko{display:none}.audio-ko.on{display:block}
+#texteRefT{white-space:pre-line;display:block;margin-top:6px}
+</style></head>
+<body>
+<header class="bandeau"><div class="wrap">
+ <div class="chapitre">Écrits professionnels · banque 2/5 <span>/</span> Module 1</div><h1>Dictée n° 2 — Une carte volée</h1><p class="sous">Dictée puis synthèse du texte</p>
+</div></header>
+<div class="wrap">
+
+<div class="carte" id="intro360">
+<div class="enc"><span class="t">CE QUE VOUS ALLEZ FAIRE</span>Deux temps. <b>La dictée</b> : écoutez le texte et écrivez-le dans le cadre — vous pouvez mettre en pause et réécouter. À la validation, votre texte est figé et comparé mot à mot au texte exact. <b>La synthèse</b> : résumez ensuite le texte en quatre phrases au plus, puis comparez avec la synthèse modèle. Aucun résultat n'est transmis : c'est un entraînement.</div>
+<div class="enc ci"><span class="t">CONSEIL</span>Écoutez une première fois sans écrire. Pendant la dictée, pensez aux trois règles de la journée : futur ou conditionnel, accord du participe passé, petits mots.</div>
+</div>
+
+<div class="carte" id="introLms" style="display:none">
+<div class="enc"><span class="t">LA DICTÉE</span>Écoutez le texte et écrivez-le dans la zone de réponse du parcours. Vous pouvez mettre en pause et réécouter. Aucun correcteur ne vous aide : relisez-vous. La dictée est notée sur 20 points ; chaque faute retire un point.</div>
+</div>
+<div class="carte" id="consignes">
+<div class="enc ci"><span class="t">AVANT D'ÉCRIRE</span>Écrivez les nombres <b>en lettres</b>. Nom propre : <b>Leroy</b>. Allez à la ligne quand la voix vous le dit : le texte compte six paragraphes.</div>
+</div>
+
+<div id="zoneDictee">
+<h2><span class="num">1 ·</span>La dictée</h2>
+<div class="carte">
+<audio id="audio" controls preload="metadata" controlsList="nodownload"><source src="ecrits_pro_banque_2_m1_dictee.mp4" type="audio/mp4"></audio>
+<div class="enc al audio-ko" id="audioKo"><span class="t">FICHIER AUDIO INTROUVABLE</span>Le fichier <code>ecrits_pro_banque_2_m1_dictee.mp4</code> doit se trouver dans le même dossier que cette page. Prévenez votre formatrice.</div>
+<div id="saisie360">
+<textarea class="redac" id="saisie" rows="10" spellcheck="false" autocomplete="off" placeholder="Écrivez la dictée ici…"></textarea>
+<div class="barre"><button class="btn" id="valD">Valider ma dictée</button><span id="figeD"></span></div>
+<div class="corr" id="corrD"></div>
+</div>
+</div>
+</div>
+
+<div class="carte" id="texteRef" style="display:none">
+<div class="enc"><span class="t">LE TEXTE À RÉSUMER</span><span id="texteRefT"></span></div>
+<div class="situ">Résumez ce texte en <b>quatre phrases au maximum</b>, comme une note que vous laisseriez dans le dossier de la cliente pour un collègue. Gardez les faits, les chiffres et ce que la banque a promis ; supprimez le reste. Rédigez votre synthèse dans la zone de réponse du parcours.</div>
+</div>
+
+<div id="zoneSynth">
+<h2><span class="num">2 ·</span>La synthèse</h2>
+<div class="carte">
+<div class="situ">Résumez ce texte en <b>quatre phrases au maximum</b>, comme une note que vous laisseriez dans le dossier de la cliente pour un collègue. Gardez les faits, les chiffres et ce que la banque a promis ; supprimez le reste.</div>
+<textarea class="redac" id="synth" rows="5" spellcheck="false" placeholder="Votre synthèse…"></textarea>
+<div class="barre"><button class="btn" id="valS">Valider ma synthèse</button><span id="figeS"></span></div>
+<div class="corr" id="corrS"></div>
+</div>
+</div>
+
+<div class="barre sticky" id="barre360">
+ <button class="btn sec" id="rejouer">↻ Recommencer</button>
+ <span style="font-size:13px;color:var(--gris-moyen)">Le rejeu efface la dictée et la synthèse.</span>
+</div>
+
+<footer>TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</footer>
+</div>
+<script>
+['paste','drop'].forEach(ev=>document.addEventListener(ev,e=>{ if(e.target.tagName==='TEXTAREA') e.preventDefault(); }));
+const TEXTE = "Madame Leroy a appelé notre agence lundi matin. Elle s'était fait dérober sa carte bancaire la veille, dans un train. Elle souhaitait savoir quelles démarches elle devait effectuer et quels seraient les frais éventuels à sa charge.\n\nElle avait déjà fait opposition auprès du centre dédié. Nous ne lui imputerons donc aucune des opérations passées après cette opposition. Quel que soit le montant des sommes concernées, notre établissement est tenu de respecter la réglementation en vigueur.\n\nElle s'est néanmoins inquiétée de quelques paiements effectués avant l'opposition. Je lui ai expliqué que, quoiqu'elle ait réagi rapidement, une franchise de cinquante euros pourrait rester à sa charge, sauf pour les paiements validés sans saisie de son code. Dans ce cas, nous lui rembourserons la totalité des sommes concernées.\n\nJe lui ai également rappelé qu'elle était censée vérifier régulièrement ses relevés bancaires et qu'elle disposait de treize mois pour contester toute opération qu'elle n'aurait pas autorisée. Quoi qu'il en soit, elle ne devait pas s'en inquiéter outre mesure, car nous allions examiner attentivement les éléments qu'elle nous avait communiqués.\n\nLe jour même, nous avons analysé les relevés qu'elle nous avait transmis. Nous y avons constaté quelques anomalies, mais aucune ne nécessitait davantage de justificatifs. Nous avons donc pu évaluer sans attendre le préjudice qu'elle a subi.\n\nNous lui enverrons sa nouvelle carte sous huit jours et nous lui confirmerons par écrit le montant remboursé. Elle pourra ainsi bénéficier de tous les services habituels, sans avoir à effectuer de nouvelles démarches. Quelle que soit la durée nécessaire au traitement du dossier, nos conseillers resteront à la disposition de leurs clients pour leur apporter toute l'aide utile.";
+const MODELE = "Madame Leroy contacte son agence après le vol de sa carte bancaire, survenu la veille, pour connaître les démarches à effectuer et les frais éventuels à sa charge. Elle a déjà fait opposition, mais s'inquiète de plusieurs paiements antérieurs : une franchise de 50 € peut s'appliquer, sauf aux paiements validés sans saisie du code, que la banque rembourse en totalité. Son conseiller lui rappelle qu'elle dispose de 13 mois pour contester une opération non autorisée et analyse ses relevés le jour même. L'agence lui enverra une nouvelle carte sous 8 jours et lui confirmera par écrit le montant remboursé.";
+const POINTS = `<table><thead><tr><th>Passage</th><th>La règle</th></tr></thead><tbody><tr><td><b>quelles démarches, quels seraient les frais · quelques paiements · quel que soit, quelle que soit</b></td><td><i>Quel</i> s'accorde avec le nom auquel il se rapporte (<i>quelles démarches</i>, <i>quels seraient les frais</i>). <i>Quelques</i> en un mot = un petit nombre de : <i>quelques paiements</i>, <i>quelques anomalies</i>. <i>Quel que</i> en deux mots, devant le verbe être au subjonctif : <i>quel</i> s'accorde avec le sujet de être (<i>quel que soit le montant</i>, <i>quelle que soit la durée</i>).</td></tr><tr><td><b>quoiqu&#x27;elle ait réagi · quoi qu&#x27;il en soit</b></td><td><i>Quoique</i> en un mot = « bien que », suivi du subjonctif (<i>ait réagi</i>). <i>Quoi que</i> en deux mots = « quelle que soit la chose que » : <i>quoi qu'il en soit</i>, <i>quoi que vous fassiez</i>.</td></tr><tr><td><b>sans saisie, sans attendre, sans avoir · s&#x27;en inquiéter</b></td><td><i>Sans</i> = privé de, le contraire de « avec ». <i>S'en</i> = se + en, devant un verbe : <i>elle ne devait pas s'en inquiéter</i> (s'inquiéter de cela).</td></tr><tr><td><b>censée · davantage · leur / leurs · toute, tous</b></td><td><i>Censée</i> = supposée (pas <i>sensée</i>). <i>Davantage</i> = plus (pas <i>d'avantage</i>). <i>Leurs clients</i> (plusieurs), <i>leur apporter</i> (devant un verbe : jamais de s). <i>Toute opération</i>, <i>tous les services</i>.</td></tr><tr><td><b>s&#x27;était fait dérober · s&#x27;est inquiétée</b></td><td><i>Fait</i> suivi d'un infinitif reste invariable. <i>S'est inquiétée</i> : le pronom <i>se</i>, complément d'objet direct qui représente le sujet, est placé avant le verbe : accord au féminin singulier.</td></tr><tr><td><b>communiqués, transmis, subi, autorisée · a appelé notre agence</b></td><td>Avec avoir, le participe s'accorde avec le complément d'objet direct (COD) placé avant le verbe : <i>les éléments qu'</i>… <i>communiqués</i>, <i>toute opération qu'</i>… <i>autorisée</i>, <i>le préjudice qu'</i>… <i>subi</i> (sans t). Si le COD est placé après, pas d'accord : <i>a appelé notre agence</i>, <i>avons constaté quelques anomalies</i>.</td></tr><tr><td><b>pourrait, n&#x27;aurait pas autorisée, allions examiner · imputerons, rembourserons, enverrons, confirmerons</b></td><td>Après un verbe au passé (<i>je lui ai expliqué que…</i>), on exprime un futur vu depuis le passé au conditionnel ou avec <i>aller</i> à l'imparfait. Le futur simple marque les engagements fermes de la banque.</td></tr></tbody></table>`;
+const GRILLE = `<ul><li>Le fait principal est posé dès la première phrase (vol de la carte, demande de la cliente).</li><li>Les chiffres sont repris sans erreur : 50 €, 13 mois, 8 jours.</li><li>La nuance est conservée : la franchise est possible, pas certaine ; elle ne vaut pas pour les paiements sans code.</li><li>Les engagements de la banque figurent (nouvelle carte, confirmation écrite du montant).</li><li>Quatre phrases au plus, à la voix active, sans formule de politesse ni répétition.</li></ul>`;
+const audio = document.getElementById('audio');
+audio.addEventListener('error',()=>document.getElementById('audioKo').classList.add('on'),true);
+audio.querySelector('source').addEventListener('error',()=>document.getElementById('audioKo').classList.add('on'));
+
+function mots(s){ return s.replace(/[’]/g,"'").replace(/([.,;:!?«»()])/g,' $1 ').split(/\s+/).filter(Boolean); }
+function norm(w){ return w; }
+// alignement mot à mot (distance d'édition)
+function aligner(a,b){
+ const n=a.length,m=b.length,D=[];
+ for(let i=0;i<=n;i++){D.push(new Array(m+1).fill(0));D[i][0]=i;}
+ for(let j=0;j<=m;j++)D[0][j]=j;
+ for(let i=1;i<=n;i++)for(let j=1;j<=m;j++)
+  D[i][j]=Math.min(D[i-1][j]+1,D[i][j-1]+1,D[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
+ const out=[];let i=n,j=m;
+ while(i>0||j>0){
+  if(i>0&&j>0&&D[i][j]===D[i-1][j-1]+(a[i-1]===b[j-1]?0:1)){out.unshift([a[i-1],b[j-1]]);i--;j--;}
+  else if(j>0&&D[i][j]===D[i][j-1]+1){out.unshift([null,b[j-1]]);j--;}
+  else{out.unshift([a[i-1],null]);i--;}
+ }
+ return out;
+}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+document.getElementById('valD').addEventListener('click',()=>{
+ const t=document.getElementById('saisie');
+ if(t.value.trim().split(/\s+/).length<30){ alert("Écrivez la dictée en entier avant de valider."); return; }
+ const al=aligner(mots(t.value),mots(TEXTE));
+ let err=0;
+ const h=al.map(([x,y])=>{
+  if(x===y) return esc(y);
+  err++;
+  if(x===null) return '<span class="manque">['+esc(y)+']</span>';
+  if(y===null) return '<span class="ko"><s>'+esc(x)+'</s></span>';
+  return '<span class="ko">'+esc(x)+'<small>→ '+esc(y)+'</small></span>';
+ }).join(' ').replace(/ ([.,)])/g,'$1').replace(/\( /g,'(');
+ t.disabled=true;
+ const b=document.getElementById('valD'); b.textContent='Dictée validée'; b.disabled=true;
+ document.getElementById('figeD').innerHTML='<span class="fige">Réponse figée</span>';
+ const c=document.getElementById('corrD'); c.className='corr on';
+ c.innerHTML=`<div class="score"><span class="gros">${err}</span><span class="lib">${err>1?'écarts relevés':'écart relevé'} avec le texte exact (mots erronés, manquants ou en trop, ponctuation comprise)</span></div>
+ <div class="diff">${h}</div>
+ <p style="font-size:13px;color:var(--gris-moyen)">En rouge : votre mot, suivi de la forme attendue. Entre crochets : un mot oublié. Une majuscule ou une virgule comptent aussi.</p>
+ <div class="enc"><span class="t">LES POINTS DE LANGUE DE CETTE DICTÉE</span>${POINTS}</div>`;
+});
+document.getElementById('valS').addEventListener('click',()=>{
+ const t=document.getElementById('synth');
+ if(t.value.trim().length<60){ alert("Rédigez votre synthèse avant de valider."); return; }
+ t.disabled=true;
+ const b=document.getElementById('valS'); b.textContent='Synthèse validée'; b.disabled=true;
+ document.getElementById('figeS').innerHTML='<span class="fige">Réponse figée</span>';
+ const c=document.getElementById('corrS'); c.className='corr on';
+ c.innerHTML=`<div class="enc"><span class="t">UNE SYNTHÈSE MODÈLE</span>${esc(MODELE)}</div>
+ <div class="enc ci"><span class="t">VÉRIFIEZ VOTRE SYNTHÈSE POINT PAR POINT</span>${GRILLE}</div>`;
+});
+document.getElementById('rejouer').addEventListener('click',()=>location.reload());
+/* Dans le LMS (?lms=1), la saisie se fait dans le parcours : la page ne garde que l'écoute.
+   Avec &vue=texte, elle affiche le texte de référence pour l'étape de synthèse. */
+(function(){
+ const p=new URLSearchParams(location.search);
+ if(p.get('lms')!=='1') return;
+ ['intro360','saisie360','zoneSynth','barre360'].forEach(id=>document.getElementById(id).style.display='none');
+ if(p.get('vue')==='texte'){
+  ['zoneDictee','consignes'].forEach(id=>document.getElementById(id).style.display='none');
+  document.getElementById('texteRefT').textContent=TEXTE;
+  document.getElementById('texteRef').style.display='block';
+  audio.pause();
+ } else document.getElementById('introLms').style.display='block';
+})();
+</script>
+</body></html>
